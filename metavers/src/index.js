@@ -1,3 +1,7 @@
+//* Import
+import Movements from "./movements.js";
+
+
 // * Declaración de la scena de threjs
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xbfd1e5)
@@ -51,6 +55,26 @@ function animate() {
     cone.rotation.z += 0.04
     cone.rotation.y += 0.04
 
+    //* movimiento
+    //* Izquierda
+    if(Movements.isPressed(37)){
+        camera.position.x -= 0.5;
+    }
+    //* Derecha
+    if(Movements.isPressed(39)){
+        camera.position.x += 0.5;
+    }
+    //* Abajo
+    if(Movements.isPressed(40)){
+        camera.position.y -= 0.5;
+    }
+    //* Arriba
+    if(Movements.isPressed(38)){
+        camera.position.y += 0.5;
+    }
+
+    //* Mira hacia
+    camera.lookAt(space.position)
     //* Para la animación del frame
 	requestAnimationFrame( animate );
 	renderer.render( scene, camera );
