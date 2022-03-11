@@ -10,3 +10,5 @@ Necesitas primero el archivo de threejs
 Luego necesitas la web3 para los tokens
 [Web3](https://www.npmjs.com/package/web3xs)
 
+
+[Remix Etherum](https://remix.ethereum.org/#optimize=false&runs=200&evmVersion=null&version=soljson-v0.8.7+commit.e28d00a7.js)
