@@ -6,6 +6,7 @@ import "@openzeppelin/contracts@4.4.2/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts@4.4.2/access/Ownable.sol";
 import "@openzeppelin/contracts@4.4.2/utils/Counters.sol";
 
+// Smart contract 0x4038bA2d9575C39352a8fbb218a9aeA8CD281cA9
 // Creation of metavers luis
 contract Metavers is ERC721, Ownable {
 
