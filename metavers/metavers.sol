@@ -14,7 +14,7 @@ contract Metavers is ERC721, Ownable {
 
     // Counters to regulate the current amount ofNTF Tokens minted
     using Counters for Counters.Counter;
-    Counters.Counters private supply;
+    Counters.Counter private supply;
 
     // Total number NTF available for creation
     uint256 public maxSupply = 100;
@@ -60,5 +60,15 @@ contract Metavers is ERC721, Ownable {
         NTFOwners[msg.sender].push(_newBuild);
     }
 
+    // Extraction of ethers form the smart contract to the owner
+    function withdraw() external payable onlyOwner {
+        address payable _owner = payable(owner());
+        _owner.transfer(address(this).balance);
+    }
+
+    // Obtain a user's Metaverse buildings
+    function getOwnerBuildings() public view returns (Building [] memory){
+        return NTFOwners[msg.sender];
+    }
 
 }
