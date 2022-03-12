@@ -1,6 +1,6 @@
 import abi from './abi/abi.json' assert {type: "json"}
 
-// sc: 0x4038bA2d9575C39352a8fbb218a9aeA8CD281cA9
+// sc: 0xBA9d56AB1799F549D08A33d9954aac122514AD7B
 
 const blockchain = new Promise((res, rej) => {
     if(typeof window.ethereum === "undefined"){
@@ -9,7 +9,7 @@ const blockchain = new Promise((res, rej) => {
 
     // Web3 Instance
     let web3 = new Web3(window.ethereum);
-    let contract = new web3.eth.Contract(abi, 0x4038bA2d9575C39352a8fbb218a9aeA8CD281cA9);
+    let contract = new web3.eth.Contract(abi, "0xBA9d56AB1799F549D08A33d9954aac122514AD7B");
 
     // Get my metamask address
     web3.eth.getAccounts().then((accounts) => {
@@ -41,8 +41,10 @@ const blockchain = new Promise((res, rej) => {
     web3.eth.getAccounts().then((accounts) => {
         contract.methods.totalSupply().call({from: accounts[0]}).then((supply) => {
             contract.methods.getBuildings().call({from: accounts[0]}).then((data) => {
-                res({supply: supply, buildings: data})
+                res({supply: supply, buildings: data});
             })
         })
     })
 })
+
+export default blockchain;
