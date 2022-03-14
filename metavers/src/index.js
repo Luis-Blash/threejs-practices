@@ -1,6 +1,7 @@
 //* Import
 import Movements from "./movements.js";
 import blockchain from "./Web.js";
+import abi from "./abi/abi.json" assert { type: "json" };
 
 // * Declaración de la scena de threjs
 const scene = new THREE.Scene();
@@ -83,13 +84,47 @@ function animate() {
 }
 animate();
 
-// New ntf
-const buttonNTF = document.getElementById('mint');
-buttonNTF.addEventListener('click', mintNTF);
-
 const mintNTF = () => {
-  
-}
+  // Variables
+  let ntf_name = document.getElementById("nameNTF").value;
+  let ntf_width = document.getElementById("width").value;
+  let ntf_height = document.getElementById("height").value;
+  let ntf_depth = document.getElementById("depth").value;
+  let ntf_position_x = document.getElementById("positionX").value;
+  let ntf_position_y = document.getElementById("positionY").value;
+  let ntf_position_z = document.getElementById("positionZ").value;
+
+  if (typeof window.ethereum === "undefined") {
+    rej("Necesitas installar MetaMask to use it!");
+  }
+
+  let web3 = new Web3(window.ethereum);
+  let contract = new web3.eth.Contract(
+    abi,
+    "0xBA9d56AB1799F549D08A33d9954aac122514AD7B"
+  );
+
+  web3.eth.getAccounts().then((accounts) => {
+    contract.methods
+      .mint(
+        ntf_name,
+        ntf_width,
+        ntf_height,
+        ntf_depth,
+        ntf_position_x,
+        ntf_position_y,
+        ntf_position_z
+      )
+      .send({ from: accounts[0] })
+      .then((data) => {
+        console.log("NTF Available in the metaverse");
+      });
+  });
+};
+
+// New ntf
+const buttonNTF = document.getElementById("mint");
+buttonNTF.addEventListener("click", mintNTF);
 
 // Web3 connection to the data generated in the blockchain to be
 // represent
@@ -107,7 +142,7 @@ blockchain.then((result) => {
       const boxMaterial = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
       const ntf = new THREE.Mesh(boxGeometry, boxMaterial);
       ntf.position.set(building.x, building.y, building.z);
-      scene.add(ntf)
+      scene.add(ntf);
     }
   });
 });

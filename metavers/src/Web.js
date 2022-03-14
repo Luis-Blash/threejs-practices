@@ -13,7 +13,7 @@ const blockchain = new Promise((res, rej) => {
 
     // Get my metamask address
     web3.eth.getAccounts().then((accounts) => {
-        console.log("My Account", [accounts[0]]);
+        console.log("My Account", accounts);
     })
 
     // Get the current supply of ntf tokens
