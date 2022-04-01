@@ -7,13 +7,24 @@ scene.background = new THREE.Color('skyblue');
 
 // camara
 const camera = new THREE.PerspectiveCamera(
-    35, // grado de vision
+    35, // grado de vision - Fov
     container.clientWidth/container.clientHeight, // aspec ratio
-    0.1, // que tan cerca se renderizar
-    1000 // que tan lejos se van a renderizar 1 => 1m, si se pasan ya no se van a renderizar
+    0.1, // que tan cerca se renderizar - near
+    1000 // que tan lejos se van a renderizar 1 => 1m, si se pasan ya no se van a renderizar - Far
 );
 camera.position.set(0, 0, 15);
-;
+
+// puedes darle valores a camara
+// camera.zoom = 2;
+// camera.updateProjectionMatrix();
+/*
+Perpective
+https://codepen.io/gammafp/full/OJMbXzX
+orthografic
+https://codepen.io/gammafp/full/NWxbrLg
+ */
+
+
 // Mesh
 const geometry = new THREE.BoxBufferGeometry( 1, 1, 1 ); // que es mejor dado que guarda cache
 const material = new THREE.MeshBasicMaterial( {
