@@ -15,17 +15,29 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.set(0, 0, 15);
 ;
 // Mesh
-const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-const material = new THREE.MeshBasicMaterial( {color: 'teal'} );
+const geometry = new THREE.BoxBufferGeometry( 1, 1, 1 ); // que es mejor dado que guarda cache
+const material = new THREE.MeshBasicMaterial( {
+    color: 'teal'
+} );
 const cube = new THREE.Mesh( geometry, material );
+// const cube = new THREE.Mesh( geometry ); // le pasamos a los hijos la materia
 scene.add( cube );
+// scene.overrideMaterial = material // le pasamos a los hijos la materia
+
+// setTimeout(() => {
+//     scene.remove( cube ); //eliminar de la escena
+// }, 2000);
 
 // Render
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({
+    antialias: true, //simular dientes
+    // alpha: true, // hace que sea fondo tranparente
+    canvas: container, // de esta manera le pasas el canvas
+});
 renderer.setSize(container.clientWidth, container.clientHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 
-container.appendChild(renderer.domElement);
+// container.appendChild(renderer.domElement);
 
 const update = () => {
     cube.rotateX(0.01);
