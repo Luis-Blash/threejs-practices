@@ -13,6 +13,7 @@ function App() {
 
     let loadedModel;
     const glftLoader = new GLTFLoader();
+    //! es relativa
     glftLoader.load('./assets/shiba/scene.gltf', (gltfScene) => {
       loadedModel = gltfScene;
       gltfScene.scene.rotation.y = Math.PI / 8;
