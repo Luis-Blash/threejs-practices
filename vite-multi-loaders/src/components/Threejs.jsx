@@ -21,17 +21,16 @@ export const Threejs = () => {
 
   return (
     <>
-      <div ref={gameContainer} id="game-container">
-        <div ref={progressContainer} className="progress-bar-container">
-          <label htmlFor="progress-bar">Loading...</label>
-          <progress
-            ref={progressBar}
-            id="progress-bar"
-            value="0"
-            max="100"
-          ></progress>
-        </div>
+      <div ref={progressContainer} className="progress-bar-container">
+        <label htmlFor="progress-bar">Loading...</label>
+        <progress
+          ref={progressBar}
+          id="progress-bar"
+          value="0"
+          max="100"
+        ></progress>
       </div>
+      <div ref={gameContainer} id="game-container"></div>
     </>
   );
 };
