@@ -1,27 +1,67 @@
-import { Color, DirectionalLight, HemisphereLight, Scene } from "three";
+import {
+  Color,
+  DirectionalLight,
+  HemisphereLight,
+  LoadingManager,
+  Scene,
+} from "three";
 // import { Cube } from "../object/Cube";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 export class Scene1 extends Scene {
-  constructor(objects = []) {
+  constructor(
+    objects = [],
+    progress = {
+      container: null,
+      progress: null,
+    }
+  ) {
     super();
     this.background = new Color("skyblue").convertSRGBToLinear();
     this.glftLoader = null;
     this.loadedModel = null;
-    // this.object3d(objects);
-    this.managerLoader(objects);
+    this.managerLoader(objects, progress);
   }
 
-  create() {
-    // this.brick = new Cube(2, new Color('rgb(255,0,0)'));
-    // this.add(this.brick);
-    // const ambientLight = new HemisphereLight(0xffffbb, 0x080820, .5);
-    // const light = new DirectionalLight(0xffffff, 1.0);
-    // this.add(light, ambientLight);
-  }
+  managerLoader(
+    objects = [],
+    progress = {
+      container: null,
+      progress: null,
+    }
+  ) {
+    const loadingManager = new LoadingManager();
 
-  managerLoader(object = []){
+    loadingManager.onLoad = () => {
+      progress.container.style.display = 'none';
+    };
 
+    loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
+      progress.progress.value = (itemsLoaded / itemsTotal) * 100;
+    };
+
+    loadingManager.onError = (url) => {
+      console.log("There was an error loading " + url);
+    };
+
+    const glftLoader = new GLTFLoader(loadingManager);
+    objects.map((object) => {
+      let path = "./src/assets/models/";
+      path += object.path;
+      glftLoader.load(
+        path,
+        (gltfScene) => {
+          gltfScene.scene.scale.set(2, 2, 2);
+          gltfScene.scene.position.x = object.x;
+          this.add(gltfScene.scene);
+          // console.log(gltfScene);
+        },
+        undefined,
+        (error) => {
+          console.log(error);
+        }
+      );
+    });
   }
 
   object3d(objects = []) {

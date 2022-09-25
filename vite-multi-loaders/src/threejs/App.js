@@ -3,9 +3,15 @@ import { Scene1 } from "./scene/Scene";
 import { models } from "./type_models";
 
 export class App {
-  constructor(container) {
+  constructor(
+    container,
+    progress = {
+      container: null,
+      progress: null,
+    }
+  ) {
     this.container = container;
-    this.scene = new Scene1(models);
+    this.scene = new Scene1(models, progress);
     //* Camara
     this.camera = new PerspectiveCamera(
       35,
@@ -32,14 +38,18 @@ export class App {
   }
 
   onResize() {
-    this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
-		this.camera.aspect = this.container.clientWidth / this.container.clientHeight;
-		this.camera.updateProjectionMatrix();
+    this.renderer.setSize(
+      this.container.clientWidth,
+      this.container.clientHeight
+    );
+    this.camera.aspect =
+      this.container.clientWidth / this.container.clientHeight;
+    this.camera.updateProjectionMatrix();
   }
   render() {
     this.renderer.render(this.scene, this.camera);
     // Updates here
-		this.scene.update();
+    this.scene.update();
     this.renderer.setAnimationLoop(() => this.render());
   }
 }
